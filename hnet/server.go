@@ -16,7 +16,12 @@ type Server struct {
 
 func NewServer() hinterface.Iserver {
 
-	return &Server{} //以後讀取json檔或是全域
+	return &Server{
+		Name:      "HyanNetServer",
+		IPVersion: "tcp4",
+		IP:        "127.0.0.1",
+		Port:      8018,
+	} //以後讀取json檔或是全域
 }
 
 func (t *Server) Start() {
