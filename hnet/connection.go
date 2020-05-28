@@ -16,6 +16,44 @@ type Connection struct {
 	msgBuffChan  chan []byte        //有緩衝chan
 }
 
-func NewConntion() {
+func NewConntion() hinterface.Iconnection {
+	return &Connection{}
+}
+
+func (t *Connection) Start() {
+
+}
+
+func (t *Connection) Stop() {
+
+}
+
+func (t *Connection) GetTCPConnection() *net.TCPConn {
+	return t.Conn
+}
+
+func (t *Connection) GetConnID() uint32 {
+	return t.ConnID
+}
+
+func (t *Connection) RemoteAddr() net.Addr {
+	return t.Conn.RemoteAddr()
+}
+
+func (t *Connection) SendMsg(msgid uint32, data []byte) error {
+	return nil
+}
+
+func (t *Connection) SendBuffMsg(msgid uint32, data []byte) error {
+	return nil
+}
+
+//goroutine
+func (t *Connection) StartWrite() {
+
+}
+
+//goroutine
+func (t *Connection) StartReader() {
 
 }

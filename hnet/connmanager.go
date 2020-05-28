@@ -1,6 +1,8 @@
 package hnet
 
 import (
+	"errors"
+	"fmt"
 	"sync"
 
 	"github.com/HyanSource/hyannetserver/hinterface"
@@ -24,25 +26,52 @@ func NewConnManager() hinterface.IConnManager {
 /**/
 func (t *ConnManager) Add(conn hinterface.Iconnection) {
 
+	t.connMutex.Lock()
+	defer t.connMutex.Unlock()
+
+	//t.connections[] = conn
+
+	fmt.Println("connection add success len:", t.Length())
 }
 
 /**/
 func (t *ConnManager) Remove(conn hinterface.Iconnection) {
+	t.connMutex.Lock()
+	defer t.connMutex.Unlock()
 
+	//delete(t.connections,conn.)
 }
 
 /**/
 func (t *ConnManager) Get(connid uint32) (hinterface.Iconnection, error) {
 
-	return nil, nil
+	t.connMutex.RLock()
+	defer t.connMutex.RUnlock()
+
+	if conn, ok := t.connections[connid]; ok {
+		return conn, nil
+	}
+
+	return nil, errors.New("connection not found")
 }
 
 /**/
 func (t *ConnManager) Length() int {
-	return 0
+	t.connMutex.RLock()
+	defer t.connMutex.RUnlock()
+
+	return len(t.connections)
 }
 
 /**/
 func (t *ConnManager) ClearCloseConn() {
+	t.connMutex.Lock()
+	defer t.connMutex.Unlock()
 
+	// for k, v := range t.connections {
+	// 	v.Stop()
+	// 	delete(t.connections, k)
+	// }
+
+	fmt.Println("ClearClose success:")
 }
