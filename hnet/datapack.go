@@ -44,13 +44,13 @@ func (t *DataPack) Pack(msg hinterface.IMessage) ([]byte, error) {
 }
 
 /*把[]byte轉換成int 在解msgid以及datalen使用*/
-func (t *DataPack) UnPack_Head(data []byte) (int, error) {
+func (t *DataPack) UnPack_Head(data []byte) (uint32, error) {
 
 	databuff := bytes.NewBuffer(data)
 
-	getint := 0
+	var getint uint32
 	//把
-	if err := binary.Read(databuff, binary.LittleEndian, getint); err != nil {
+	if err := binary.Read(databuff, binary.LittleEndian, &getint); err != nil {
 		return 0, err
 	}
 
