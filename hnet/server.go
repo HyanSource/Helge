@@ -5,27 +5,32 @@ import (
 	"net"
 
 	"github.com/HyanSource/hyannetserver/hinterface"
+	"github.com/HyanSource/hyannetserver/utils"
 )
 
 type Server struct {
-	Name      string //名稱
-	IPVersion string //ipv4或其他
-	IP        string //ip
-	Port      int    //port號
+	Name      string                  //名稱
+	IPVersion string                  //ipv4或其他
+	IP        string                  //ip
+	Port      int                     //port號
+	MsgHandle hinterface.IMsgHandle   //消息模塊
+	ConnMgr   hinterface.IConnManager //連接管理
 }
 
 func NewServer() hinterface.Iserver {
 
 	return &Server{
-		Name:      "HyanNetServer",
+		Name:      utils.GlobalObject.Name,
 		IPVersion: "tcp4",
-		IP:        "127.0.0.1",
-		Port:      8018,
+		IP:        utils.GlobalObject.Host,
+		Port:      utils.GlobalObject.TCPPort,
+		MsgHandle: NewMsgHandle(),
+		ConnMgr:   NewConnManager(),
 	} //以後讀取json檔或是全域
 }
 
 func (t *Server) Start() {
-	fmt.Println("")
+	// fmt.Println("")
 
 	go func() {
 
@@ -50,6 +55,14 @@ func (t *Server) Start() {
 
 		//3.啟動server
 		for {
+
+			var cid uint32
+			cid = 0
+
+			for !t.ConnMgr.ContainsConnID(cid) {
+				cid++
+			}
+
 			conn, err := listener.AcceptTCP()
 			if err != nil {
 				fmt.Println("AcceptTCP err:", err)
@@ -59,10 +72,16 @@ func (t *Server) Start() {
 			fmt.Println("Get conn remote addr:" + conn.RemoteAddr().String())
 
 			//超過最大連線時 關閉此連線
+			if t.ConnMgr.Length() >= utils.GlobalObject.MaxConn {
+				conn.Close()
+				continue
+			}
 
 			//處理新連接的請求 應該有conn和handler
+			dealConn := NewConntion(t, conn, cid)
 
 			//啟動此連接的業務處理
+			go dealConn.Start()
 		}
 
 	}()

@@ -3,6 +3,8 @@ package hnet
 import (
 	"fmt"
 	"testing"
+
+	"github.com/HyanSource/hyannetserver/utils"
 )
 
 /*封包拆包的測試*/
@@ -21,6 +23,12 @@ func TestDataPack(t *testing.T) {
 		fmt.Println("datalen err:", err)
 		return
 	}
+
+	if utils.GlobalObject.MaxPacketSize > 0 && utils.GlobalObject.MaxPacketSize > datalen {
+		fmt.Println("too large msg data received")
+		return
+	}
+
 	data = data[4:]
 
 	fmt.Println(datalen)

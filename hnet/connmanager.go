@@ -29,7 +29,7 @@ func (t *ConnManager) Add(conn hinterface.Iconnection) {
 	t.connMutex.Lock()
 	defer t.connMutex.Unlock()
 
-	//t.connections[] = conn
+	t.connections[conn.GetConnID()] = conn
 
 	fmt.Println("connection add success len:", t.Length())
 }
@@ -67,11 +67,23 @@ func (t *ConnManager) Length() int {
 func (t *ConnManager) ClearCloseConn() {
 	t.connMutex.Lock()
 	defer t.connMutex.Unlock()
-
-	// for k, v := range t.connections {
-	// 	v.Stop()
-	// 	delete(t.connections, k)
-	// }
+	/*停止並刪除連接*/
+	for k, v := range t.connections {
+		v.Stop()
+		delete(t.connections, k)
+	}
 
 	fmt.Println("ClearClose success:")
+}
+
+/*判斷所有連接connid有無重複*/
+func (t *ConnManager) ContainsConnID(connid uint32) bool {
+
+	for k, _ := range t.connections {
+		if k == connid {
+			return true
+		}
+	}
+
+	return false
 }

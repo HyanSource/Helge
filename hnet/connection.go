@@ -7,6 +7,7 @@ import (
 	"net"
 
 	"github.com/HyanSource/hyannetserver/hinterface"
+	"github.com/HyanSource/hyannetserver/utils"
 )
 
 type Connection struct {
@@ -19,8 +20,16 @@ type Connection struct {
 	msgBuffChan  chan []byte        //有緩衝chan
 }
 
-func NewConntion() hinterface.Iconnection {
-	return &Connection{}
+func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hinterface.Iconnection {
+	return &Connection{
+		TCPServer:    server,
+		Conn:         conn,
+		ConnID:       connID,
+		isClosed:     false,
+		ExitBuffChan: make(chan bool, 1),
+		msgChan:      make(chan []byte),
+		msgBuffChan:  make(chan []byte, utils.GlobalObject.MaxMsgChanLen),
+	}
 }
 
 func (t *Connection) Start() {
@@ -126,8 +135,15 @@ func (t *Connection) StartReader() {
 		datalen, err := dp.UnPack_Head(headdatalen)
 		if err != nil {
 			fmt.Println("datalen unpack err:", err)
-			break
+			return
 		}
+
+		/*判斷長度*/
+		if utils.GlobalObject.MaxPacketSize > 0 && datalen > utils.GlobalObject.MaxPacketSize {
+			fmt.Println("too large msg data received")
+			return
+		}
+
 		//讀取msgid
 		headmsgid := make([]byte, dp.GetHeadLen())
 		if _, err := io.ReadFull(t.Conn, headmsgid); err != nil {
@@ -138,7 +154,7 @@ func (t *Connection) StartReader() {
 		msgid, err := dp.UnPack_Head(headmsgid)
 		if err != nil {
 			fmt.Println("msgid unpack err:", err)
-			break
+			return
 		}
 
 		//加上一個判斷有無超過最大byte長度(全域變數)

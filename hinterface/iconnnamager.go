@@ -7,4 +7,5 @@ type IConnManager interface {
 	Get(connid uint32) (Iconnection, error) //用connid取得連接
 	Length() int                            //目前總連接數量
 	ClearCloseConn()                        //清除以及關閉所有連接
+	ContainsConnID(connid uint32) bool      //判斷所有連接connid有無重複
 }
