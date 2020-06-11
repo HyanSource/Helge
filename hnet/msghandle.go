@@ -14,6 +14,7 @@ type MsgHandle struct {
 	TaskQueue    []chan hinterface.Irequest
 }
 
+/*回傳一個新的處理訊息模塊*/
 func NewMsgHandle() hinterface.IMsgHandle {
 	return &MsgHandle{
 		Apis:         make(map[uint32]hinterface.IRouter),
@@ -56,6 +57,7 @@ func (t *MsgHandle) StartWorkerPool() {
 
 }
 
+/*啟動工作池*/
 func (t *MsgHandle) StartOneWorker(workID int, taskQueue chan hinterface.Irequest) {
 	fmt.Println("worker id:", workID)
 

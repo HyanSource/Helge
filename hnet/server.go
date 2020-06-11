@@ -87,11 +87,26 @@ func (t *Server) Start() {
 	}()
 }
 
+/*停止服務*/
 func (t *Server) Stop() {
-
+	t.GetConnMgr().ClearCloseConn()
 }
 
+/*運行*/
 func (t *Server) Serve() {
+	t.Start()
 
 	select {}
+}
+
+func (t *Server) AddRouter(msgid uint32, router hinterface.IRouter) {
+	t.MsgHandle.AddRouter(msgid, router)
+}
+
+func (t *Server) GetConnMgr() hinterface.IConnManager {
+	return t.ConnMgr
+}
+
+func (t *Server) GetMsgHandle() hinterface.IMsgHandle {
+	return t.MsgHandle
 }

@@ -21,7 +21,8 @@ type Connection struct {
 }
 
 func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hinterface.Iconnection {
-	return &Connection{
+
+	c := &Connection{
 		TCPServer:    server,
 		Conn:         conn,
 		ConnID:       connID,
@@ -30,15 +31,34 @@ func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hi
 		msgChan:      make(chan []byte),
 		msgBuffChan:  make(chan []byte, utils.GlobalObject.MaxMsgChanLen),
 	}
+
+	c.TCPServer.GetConnMgr().Add(c)
+
+	return c
 }
 
 func (t *Connection) Start() {
 	go t.StartWrite()
 	go t.StartReader()
+
+	//hook
 }
 
 func (t *Connection) Stop() {
+	if t.isClosed {
+		return
+	}
 
+	t.isClosed = true
+
+	//hook
+
+	t.Conn.Close()
+
+	t.TCPServer.GetConnMgr().Remove(t)
+
+	close(t.ExitBuffChan)
+	close(t.msgBuffChan)
 }
 
 func (t *Connection) GetTCPConnection() *net.TCPConn {
@@ -173,7 +193,16 @@ func (t *Connection) StartReader() {
 			msg:  msg,
 		}
 
-		fmt.Println(req)
+		// fmt.Println(req)
+
+		if utils.GlobalObject.MaxWorkerTaskLen > 0 {
+			t.TCPServer.GetMsgHandle().SendMsgToTaskQueue(&req)
+		} else {
+			go t.TCPServer.GetMsgHandle().DoMsgHandler(&req)
+		}
+
 	}
 
 }
+
+//屬性應該要獨立寫成1個模塊
