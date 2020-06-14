@@ -30,7 +30,7 @@ func NewServer() hinterface.Iserver {
 }
 
 func (t *Server) Start() {
-	// fmt.Println("")
+	fmt.Println(t.IPVersion, " ", t.IP, ":", t.Port)
 
 	go func() {
 
@@ -56,13 +56,6 @@ func (t *Server) Start() {
 		//3.啟動server
 		for {
 
-			var cid uint32
-			cid = 0
-
-			for !t.ConnMgr.ContainsConnID(cid) {
-				cid++
-			}
-
 			conn, err := listener.AcceptTCP()
 			if err != nil {
 				fmt.Println("AcceptTCP err:", err)
@@ -76,6 +69,15 @@ func (t *Server) Start() {
 				conn.Close()
 				continue
 			}
+
+			var cid uint32
+			cid = 0
+
+			for t.ConnMgr.ContainsConnID(cid) {
+				cid++
+			}
+
+			fmt.Println("cid:", cid)
 
 			//處理新連接的請求 應該有conn和handler
 			dealConn := NewConntion(t, conn, cid)

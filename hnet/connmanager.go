@@ -31,15 +31,15 @@ func (t *ConnManager) Add(conn hinterface.Iconnection) {
 
 	t.connections[conn.GetConnID()] = conn
 
-	fmt.Println("connection add success len:", t.Length())
+	// fmt.Println("connection add success len:", t.Length())
 }
 
 /**/
-func (t *ConnManager) Remove(conn hinterface.Iconnection) {
+func (t *ConnManager) Remove(connid uint32) {
 	t.connMutex.Lock()
 	defer t.connMutex.Unlock()
 
-	//delete(t.connections,conn.)
+	delete(t.connections, connid)
 }
 
 /**/

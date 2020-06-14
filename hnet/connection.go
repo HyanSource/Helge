@@ -38,6 +38,9 @@ func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hi
 }
 
 func (t *Connection) Start() {
+
+	fmt.Println("connect start")
+
 	go t.StartWrite()
 	go t.StartReader()
 
@@ -55,7 +58,7 @@ func (t *Connection) Stop() {
 
 	t.Conn.Close()
 
-	t.TCPServer.GetConnMgr().Remove(t)
+	t.TCPServer.GetConnMgr().Remove(t.ConnID)
 
 	close(t.ExitBuffChan)
 	close(t.msgBuffChan)
@@ -113,6 +116,7 @@ func (t *Connection) SendBuffMsg(msgid uint32, data []byte) error {
 
 //goroutine
 func (t *Connection) StartWrite() {
+	fmt.Println(t.RemoteAddr().String(), " startwrite")
 	defer fmt.Println(t.RemoteAddr().String(), " conn write exit")
 	for {
 		select {
@@ -140,6 +144,7 @@ func (t *Connection) StartWrite() {
 
 //goroutine
 func (t *Connection) StartReader() {
+	fmt.Println(t.RemoteAddr().String(), " startread")
 	defer fmt.Println(t.RemoteAddr().String(), " conn read exit")
 
 	for {
