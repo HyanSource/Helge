@@ -49,9 +49,6 @@ func (t *Server) Start() {
 		if err != nil {
 			panic("listen err:" + err.Error())
 		}
-
-		fmt.Println("listen OK")
-
 		//原本的作法是用cid去當成connection以及connmanager的id 可能要想其他的方式
 		//比如 隨機生成之後去判斷connmanager的map有無key在新增
 

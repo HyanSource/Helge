@@ -62,6 +62,7 @@ func (t *MsgHandle) StartWorkerPool() {
 func (t *MsgHandle) StartOneWorker(workID int, taskQueue chan hinterface.Irequest) {
 	fmt.Println("worker id:", workID)
 
+	/*處理任務迴圈*/
 	for {
 		select {
 		case Request := <-taskQueue:
