@@ -2,9 +2,8 @@ package hinterface
 
 /*管理消息接口*/
 type IMsgHandle interface {
-	DoMsgHandler(request Irequest)                        //以非阻塞處理消息
-	AddRouter(msgid uint32, router IRouter)               //增加路由
-	StartWorkerPool()                                     //啟動工作池
-	StartOneWorker(workerid int, taskQueue chan Irequest) //啟動一個工作池
-	SendMsgToTaskQueue(request Irequest)                  //將消息給工作池處理
+	DoMsgHandler(request Irequest)          //以非阻塞處理消息
+	AddRouter(msgid uint32, router IRouter) //增加路由
+	StartWorkerPool()                       //啟動工作池
+	SendMsgToTaskQueue(request Irequest)    //將消息給工作池處理
 }

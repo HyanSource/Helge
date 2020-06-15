@@ -25,6 +25,7 @@ func NewMsgHandle() hinterface.IMsgHandle {
 
 //以非阻塞方式處理
 func (t *MsgHandle) DoMsgHandler(request hinterface.Irequest) {
+
 	handler, ok := t.Apis[request.GetMessage().GetMsgId()]
 
 	if !ok {
@@ -61,10 +62,13 @@ func (t *MsgHandle) StartWorkerPool() {
 func (t *MsgHandle) StartOneWorker(workID int, taskQueue chan hinterface.Irequest) {
 	fmt.Println("worker id:", workID)
 
-	select {
-	case Request := <-taskQueue:
-		t.DoMsgHandler(Request)
+	for {
+		select {
+		case Request := <-taskQueue:
+			t.DoMsgHandler(Request)
+		}
 	}
+
 }
 
 /*消息給TaskQueue*/

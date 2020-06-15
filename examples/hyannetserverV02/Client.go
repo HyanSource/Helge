@@ -8,7 +8,7 @@ import (
 
 	"github.com/HyanSource/hyannetserver/utils"
 
-	"github.com/hyansource/hyannetserver/hnet"
+	"github.com/HyanSource/hyannetserver/hnet"
 )
 
 func main() {
@@ -32,6 +32,8 @@ func main() {
 			fmt.Println("write err:", err)
 			return
 		}
+
+		fmt.Println("write:", msg)
 
 		headDatalen := make([]byte, dp.GetHeadLen())
 		_, err = io.ReadFull(conn, headDatalen)

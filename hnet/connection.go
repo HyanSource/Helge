@@ -39,8 +39,6 @@ func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hi
 
 func (t *Connection) Start() {
 
-	fmt.Println("connect start")
-
 	go t.StartWrite()
 	go t.StartReader()
 
@@ -192,13 +190,12 @@ func (t *Connection) StartReader() {
 		}
 
 		msg := NewMsg(msgid, bodydata)
+		fmt.Println(msg)
 		//未來在Request新增一個New的方法
 		req := Request{
 			conn: t,
 			msg:  msg,
 		}
-
-		// fmt.Println(req)
 
 		if utils.GlobalObject.MaxWorkerTaskLen > 0 {
 			t.TCPServer.GetMsgHandle().SendMsgToTaskQueue(&req)

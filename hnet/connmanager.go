@@ -31,7 +31,7 @@ func (t *ConnManager) Add(conn hinterface.Iconnection) {
 
 	t.connections[conn.GetConnID()] = conn
 
-	// fmt.Println("connection add success len:", t.Length())
+	fmt.Println("connection add success len:", len(t.connections))
 }
 
 /**/
