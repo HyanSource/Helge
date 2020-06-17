@@ -43,6 +43,7 @@ func (t *Connection) Start() {
 	go t.StartReader()
 
 	//hook
+	t.TCPServer.CallHook("start", t)
 }
 
 func (t *Connection) Stop() {
@@ -53,6 +54,7 @@ func (t *Connection) Stop() {
 	t.isClosed = true
 
 	//hook
+	t.TCPServer.CallHook("stop", t)
 
 	t.Conn.Close()
 
@@ -144,6 +146,7 @@ func (t *Connection) StartWrite() {
 func (t *Connection) StartReader() {
 	fmt.Println(t.RemoteAddr().String(), " startread")
 	defer fmt.Println(t.RemoteAddr().String(), " conn read exit")
+	defer t.Stop()
 
 	for {
 		//照自己修改的解包流程

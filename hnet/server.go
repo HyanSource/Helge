@@ -9,12 +9,13 @@ import (
 )
 
 type Server struct {
-	Name      string                  //名稱
-	IPVersion string                  //ipv4或其他
-	IP        string                  //ip
-	Port      int                     //port號
-	MsgHandle hinterface.IMsgHandle   //消息模塊
-	ConnMgr   hinterface.IConnManager //連接管理
+	Name      string                      //名稱
+	IPVersion string                      //ipv4或其他
+	IP        string                      //ip
+	Port      int                         //port號
+	MsgHandle hinterface.IMsgHandle       //消息模塊
+	ConnMgr   hinterface.IConnManager     //連接管理
+	Hooks     map[string]hinterface.IHook //管理hook的map
 }
 
 func NewServer() hinterface.Iserver {
@@ -26,6 +27,7 @@ func NewServer() hinterface.Iserver {
 		Port:      utils.GlobalObject.TCPPort,
 		MsgHandle: NewMsgHandle(),
 		ConnMgr:   NewConnManager(),
+		Hooks:     make(map[string]hinterface.IHook),
 	} //以後讀取json檔或是全域
 }
 
@@ -110,4 +112,22 @@ func (t *Server) GetConnMgr() hinterface.IConnManager {
 
 func (t *Server) GetMsgHandle() hinterface.IMsgHandle {
 	return t.MsgHandle
+}
+
+//設置hook函數
+func (t *Server) SetHook(name string, f func(hinterface.Iconnection)) {
+
+	if _, ok := t.Hooks[name]; ok {
+		panic("SetHook Repeat:" + name)
+	}
+	t.Hooks[name] = NewHook(f)
+}
+
+//呼叫hook函數
+func (t *Server) CallHook(name string, conn hinterface.Iconnection) {
+
+	if h, ok := t.Hooks[name]; ok {
+		h.CallHook(conn)
+	}
+
 }
