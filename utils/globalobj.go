@@ -67,7 +67,7 @@ func init() {
 	/*初始化設置默認值*/
 	GlobalObject = &GlobalObj{
 		/**/
-		Name:             "HyanNetServer",
+		Name:             "",
 		Version:          "V0.1",
 		TCPPort:          8123,
 		Host:             "0.0.0.0",

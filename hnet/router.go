@@ -1,7 +1,7 @@
 package hnet
 
 import (
-	"github.com/HyanSource/hyannetserver/hinterface"
+	"github.com/HyanSource/Helge/hinterface"
 )
 
 //先嵌入Base之類再根據需求重寫

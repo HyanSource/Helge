@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 
-	"github.com/HyanSource/hyannetserver/hinterface"
+	"github.com/HyanSource/Helge/hinterface"
 )
 
 type DataPack struct {

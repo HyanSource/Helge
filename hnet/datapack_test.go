@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/HyanSource/hyannetserver/utils"
+	"github.com/HyanSource/Helge/utils"
 )
 
 /*封包拆包的測試*/

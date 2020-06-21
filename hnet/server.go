@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/HyanSource/hyannetserver/hinterface"
-	"github.com/HyanSource/hyannetserver/utils"
+	"github.com/HyanSource/Helge/hinterface"
+	"github.com/HyanSource/Helge/utils"
 )
 
 type Server struct {

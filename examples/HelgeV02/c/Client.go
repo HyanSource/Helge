@@ -6,9 +6,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/HyanSource/hyannetserver/utils"
+	"github.com/HyanSource/Helge/utils"
 
-	"github.com/hyansource/hyannetserver/hnet"
+	"github.com/hyansource/Helge/hnet"
 )
 
 func main() {

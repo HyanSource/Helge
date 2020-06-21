@@ -1,7 +1,7 @@
 package hnet
 
 import (
-	"github.com/HyanSource/hyannetserver/hinterface"
+	"github.com/HyanSource/Helge/hinterface"
 )
 
 /*hook模塊*/

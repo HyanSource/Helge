@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/HyanSource/hyannetserver/hinterface"
-	"github.com/HyanSource/hyannetserver/hnet"
+	"github.com/HyanSource/Helge/hinterface"
+	"github.com/HyanSource/Helge/hnet"
 )
 
 type PingRouter struct {

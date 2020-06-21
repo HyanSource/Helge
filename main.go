@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/HyanSource/hyannetserver/hnet"
+	"github.com/HyanSource/Helge/hnet"
 )
 
 func main() {

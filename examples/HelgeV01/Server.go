@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/HyanSource/hyannetserver/hnet"
-	"github.com/HyanSource/hyannetserver/utils"
+	"github.com/HyanSource/Helge/hnet"
+	"github.com/HyanSource/Helge/utils"
 )
 
 func main() {

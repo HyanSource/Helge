@@ -6,8 +6,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/HyanSource/hyannetserver/hnet"
-	"github.com/HyanSource/hyannetserver/utils"
+	"github.com/HyanSource/Helge/hnet"
+	"github.com/HyanSource/Helge/utils"
 )
 
 func main() {
@@ -83,4 +83,6 @@ func main() {
 		}()
 
 	}
+
+	select {}
 }

@@ -3,7 +3,7 @@ package hnet
 import (
 	"errors"
 
-	"github.com/HyanSource/hyannetserver/hinterface"
+	"github.com/HyanSource/Helge/hinterface"
 )
 
 type Property struct {

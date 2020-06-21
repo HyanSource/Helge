@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/HyanSource/hyannetserver/hinterface"
+	"github.com/HyanSource/Helge/hinterface"
 )
 
 /*連接管理模塊*/
