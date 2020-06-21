@@ -11,13 +11,14 @@ import (
 )
 
 type Connection struct {
-	TCPServer    hinterface.Iserver //iserver hook函數用(尚未使用)
-	Conn         *net.TCPConn       //當前玩家socket
-	ConnID       uint32             //id
-	isClosed     bool               //關閉channel用
-	ExitBuffChan chan bool          //退出停止用
-	msgChan      chan []byte        //無緩衝chan
-	msgBuffChan  chan []byte        //有緩衝chan
+	TCPServer    hinterface.Iserver   //iserver hook函數用(尚未使用)
+	Conn         *net.TCPConn         //當前玩家socket
+	ConnID       uint32               //id
+	isClosed     bool                 //關閉channel用
+	ExitBuffChan chan bool            //退出停止用
+	msgChan      chan []byte          //無緩衝chan
+	msgBuffChan  chan []byte          //有緩衝chan
+	Property     hinterface.IProperty //儲存連接需要的屬性
 }
 
 func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hinterface.Iconnection {
@@ -30,6 +31,7 @@ func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hi
 		ExitBuffChan: make(chan bool, 1),
 		msgChan:      make(chan []byte),
 		msgBuffChan:  make(chan []byte, utils.GlobalObject.MaxMsgChanLen),
+		Property:     NewProperty(),
 	}
 
 	c.TCPServer.GetConnMgr().Add(c)

@@ -6,6 +6,7 @@ import (
 	"github.com/HyanSource/Helge/hinterface"
 )
 
+/*儲存屬性的模塊*/
 type Property struct {
 	propertys map[string]interface{}
 }
