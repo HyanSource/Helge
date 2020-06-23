@@ -5,28 +5,28 @@ import (
 )
 
 type Message struct {
-	DataLen uint32
-	Id      uint32
-	Data    []byte
+	dataLen uint32 //資料長度
+	id      uint32 //資料id
+	data    []byte //資料byte 可以搭配protobuf
 }
 
 func NewMsg(id uint32, data []byte) hinterface.IMessage {
 
 	return &Message{
-		DataLen: uint32(len(data)),
-		Id:      id,
-		Data:    data,
+		dataLen: uint32(len(data)),
+		id:      id,
+		data:    data,
 	}
 }
 
 func (t *Message) GetDataLen() uint32 {
-	return t.DataLen
+	return t.dataLen
 }
 
 func (t *Message) GetMsgId() uint32 {
-	return t.Id
+	return t.id
 }
 
 func (t *Message) GetData() []byte {
-	return t.Data
+	return t.data
 }

@@ -45,7 +45,8 @@ func (t *Connection) Start() {
 	go t.StartReader()
 
 	//hook
-	t.TCPServer.CallHook("start", t)
+	// t.TCPServer.CallHook("start", t)
+	t.TCPServer.GetHook().CallHook("start", t)
 }
 
 func (t *Connection) Stop() {
@@ -56,7 +57,8 @@ func (t *Connection) Stop() {
 	t.isClosed = true
 
 	//hook
-	t.TCPServer.CallHook("stop", t)
+	// t.TCPServer.CallHook("stop", t)
+	t.TCPServer.GetHook().CallHook("stop", t)
 
 	t.Conn.Close()
 
@@ -213,3 +215,19 @@ func (t *Connection) StartReader() {
 }
 
 //屬性應該要獨立寫成1個模塊
+
+func (t *Connection) GetPropertys() hinterface.IProperty {
+	return t.Property
+}
+
+// func (t *Connection) SetProperty(key string, value interface{}) {
+// 	t.Property.SetProperty(key, value)
+// }
+
+// func (t *Connection) GetProperty(key string) (interface{}, error) {
+// 	return t.Property.GetProperty(key)
+// }
+
+// func (t *Connection) RemoveProperty(key string) bool {
+// 	return t.Property.RemoveProperty(key)
+// }

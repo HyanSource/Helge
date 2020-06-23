@@ -114,12 +114,16 @@ func (t *Server) GetMsgHandle() hinterface.IMsgHandle {
 	return t.MsgHandle
 }
 
-//設置hook函數
-func (t *Server) SetHook(name string, f func(hinterface.Iconnection)) {
-
+func (t *Server) GetHook() hinterface.IHook {
+	return t.Hook
 }
 
-//呼叫hook函數
-func (t *Server) CallHook(name string, conn hinterface.Iconnection) {
+// //設置hook函數
+// func (t *Server) SetHook(name string, f func(hinterface.Iconnection)) {
+// 	t.Hook.SetHook(name, f)
+// }
 
-}
+// //呼叫hook函數
+// func (t *Server) CallHook(name string, conn hinterface.Iconnection) {
+// 	t.Hook.CallHook(name, conn)
+// }

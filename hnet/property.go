@@ -36,10 +36,10 @@ func (t *Property) GetProperty(key string) (interface{}, error) {
 
 func (t *Property) RemoveProperty(key string) bool {
 
-	if _, ok := t.propertys[key]; ok {
-		delete(t.propertys, key)
-		return true
-	}
+	_, ok := t.propertys[key]
 
-	return false
+	if ok {
+		delete(t.propertys, key)
+	}
+	return ok
 }

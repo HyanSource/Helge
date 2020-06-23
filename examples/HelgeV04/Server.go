@@ -37,10 +37,19 @@ func (t *PingRouter2) Handle(request hinterface.Irequest) {
 
 func StartConn(conn hinterface.Iconnection) {
 	fmt.Println(conn.GetConnID(), " startconn")
+
+	conn.GetPropertys().SetProperty("name", "Helge test")
 }
 
 func StopConn(conn hinterface.Iconnection) {
 	fmt.Println(conn.GetConnID(), " stopconn")
+
+	name, err := conn.GetPropertys().GetProperty("name")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("property name:", name)
 }
 
 func main() {
