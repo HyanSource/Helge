@@ -1,32 +1,23 @@
-- Helge 海格爾 golang 的TCPServer框架
+#### Helge 海格爾 golang 的TCPServer框架
 
-#### server模塊
+#### 使用方式
 
----
-#### connection模塊
+1.初始化server
+2.定義路由
+3.設置hook
+4.開始服務
+```go
+func main() {
+    //初始化
+    s :=hnet.NewServer()
 
----
-#### connmanager模塊
+    //路由
+    s.AddRouter(0,&PingRouter{})
 
----
-#### datapack模塊
+    //設置hook
+    s.GetHook().SetHook("start")
 
----
-#### message模塊
-
----
-#### msghandle模塊
-
----
-#### request模塊
-
----
-#### router模塊
-
----
-#### property模塊
-
----
-#### 全域變數
-
----
+    //開始
+    s.Serve()
+}
+```
