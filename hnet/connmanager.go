@@ -10,7 +10,7 @@ import (
 
 /*連接管理模塊*/
 type ConnManager struct {
-	connections map[uint32]hinterface.Iconnection //
+	connections map[uint32]hinterface.IConnection //
 	connMutex   sync.RWMutex                      //單寫多讀鎖     占用時阻止寫入 但不會阻止讀取            //
 }
 
@@ -19,12 +19,12 @@ func NewConnManager() hinterface.IConnManager {
 
 	//尚未實作 所以沒有辦法去New模塊
 	return &ConnManager{
-		connections: make(map[uint32]hinterface.Iconnection),
+		connections: make(map[uint32]hinterface.IConnection),
 	}
 }
 
 /**/
-func (t *ConnManager) Add(conn hinterface.Iconnection) {
+func (t *ConnManager) Add(conn hinterface.IConnection) {
 
 	t.connMutex.Lock()
 	defer t.connMutex.Unlock()
@@ -43,7 +43,7 @@ func (t *ConnManager) Remove(connid uint32) {
 }
 
 /**/
-func (t *ConnManager) Get(connid uint32) (hinterface.Iconnection, error) {
+func (t *ConnManager) Get(connid uint32) (hinterface.IConnection, error) {
 
 	t.connMutex.RLock()
 	defer t.connMutex.RUnlock()

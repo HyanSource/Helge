@@ -35,11 +35,11 @@ func (t *PingRouter2) Handle(request hinterface.Irequest) {
 	}
 }
 
-func StartConn(conn hinterface.Iconnection) {
+func StartConn(conn hinterface.IConnection) {
 	fmt.Println(conn.GetConnID(), " startconn")
 }
 
-func StopConn(conn hinterface.Iconnection) {
+func StopConn(conn hinterface.IConnection) {
 	fmt.Println(conn.GetConnID(), " stopconn")
 }
 

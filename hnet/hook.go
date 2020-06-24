@@ -7,17 +7,17 @@ import (
 /*hook模塊*/
 type Hook struct {
 	names     []string                                //存放可用名稱
-	hookfuncs map[string]func(hinterface.Iconnection) //存放方法
+	hookfuncs map[string]func(hinterface.IConnection) //存放方法
 }
 
 func NewHook() hinterface.IHook {
 	return &Hook{
 		names:     []string{"start", "stop"},
-		hookfuncs: make(map[string]func(hinterface.Iconnection)),
+		hookfuncs: make(map[string]func(hinterface.IConnection)),
 	}
 }
 
-func (t *Hook) SetHook(hookname string, f func(hinterface.Iconnection)) {
+func (t *Hook) SetHook(hookname string, f func(hinterface.IConnection)) {
 	if t.contains(hookname) {
 		if _, ok := t.hookfuncs[hookname]; !ok {
 			t.hookfuncs[hookname] = f
@@ -25,7 +25,7 @@ func (t *Hook) SetHook(hookname string, f func(hinterface.Iconnection)) {
 	}
 }
 
-func (t *Hook) CallHook(hookname string, conn hinterface.Iconnection) {
+func (t *Hook) CallHook(hookname string, conn hinterface.IConnection) {
 	if _, ok := t.hookfuncs[hookname]; ok {
 		t.hookfuncs[hookname](conn)
 	}

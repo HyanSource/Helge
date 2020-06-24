@@ -21,7 +21,7 @@ type Connection struct {
 	Property     hinterface.IProperty //儲存連接需要的屬性
 }
 
-func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hinterface.Iconnection {
+func NewConntion(server hinterface.Iserver, conn *net.TCPConn, connID uint32) hinterface.IConnection {
 
 	c := &Connection{
 		TCPServer:    server,

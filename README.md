@@ -36,7 +36,7 @@ func (t *PingRouter) Handle(request hinterface.Irequest) {
 ```
 #### 定義hook
 ```go
-func StartConn(conn hinterface.Iconnection) {
+func StartConn(conn hinterface.IConnection) {
 
 }
 ```
@@ -63,3 +63,30 @@ Server名稱
 連線數上限
 - WorkerPoolSize
 啟動工作池的數量
+
+---
+- hinterface.IServer
+1. Start()
+2. Stop()
+3. Serve()
+4. AddRouter(magid uint32,router IRouter)
+5. GetHook() IHook
+---
+- hinterface.IHook
+1. SetHook(hookname string,f func(IConnection))
+---
+- hinterface.IConnection
+1. GetTCPConnection() *net.TCPConn
+2. GetConnID() uint32
+3. RemoteAddr() net.Addr
+4. SendMsg(msgid uint32,data []byte) error
+5. SendBuffMsg(msgid uint32,data []byte) error
+6. GetPropertys() IProperty
+---
+- hinterface.IProperty
+---
+- hinterface.message
+---
+- hinterface.request
+---
+- hinterface.router

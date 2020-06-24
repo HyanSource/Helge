@@ -5,11 +5,11 @@ import (
 )
 
 type Request struct {
-	conn hinterface.Iconnection
+	conn hinterface.IConnection
 	msg  hinterface.IMessage
 }
 
-func (t *Request) GetConnection() hinterface.Iconnection {
+func (t *Request) GetConnection() hinterface.IConnection {
 	return t.conn
 }
 

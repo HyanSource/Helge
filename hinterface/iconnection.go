@@ -3,7 +3,7 @@ package hinterface
 import "net"
 
 /*玩家連接接口模塊*/
-type Iconnection interface {
+type IConnection interface {
 	Start() //啟動連接
 	Stop()  //停止連接
 
