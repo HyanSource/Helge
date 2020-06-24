@@ -13,8 +13,5 @@ type Iconnection interface {
 	SendMsg(msgid uint32, data []byte) error     //將數據給TCP客戶端 (無緩衝)
 	SendBuffMsg(msgid uint32, data []byte) error //將數據給TCP客戶端 (有緩衝)
 
-	// SetProperty(key string, value interface{})   //設置屬性
-	// GetProperty(key string) (interface{}, error) //獲取屬性
-	// RemoveProperty(key string) bool              //移除屬性
 	GetPropertys() IProperty //取得屬性模塊
 }

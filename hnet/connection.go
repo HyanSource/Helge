@@ -214,20 +214,6 @@ func (t *Connection) StartReader() {
 
 }
 
-//屬性應該要獨立寫成1個模塊
-
 func (t *Connection) GetPropertys() hinterface.IProperty {
 	return t.Property
 }
-
-// func (t *Connection) SetProperty(key string, value interface{}) {
-// 	t.Property.SetProperty(key, value)
-// }
-
-// func (t *Connection) GetProperty(key string) (interface{}, error) {
-// 	return t.Property.GetProperty(key)
-// }
-
-// func (t *Connection) RemoveProperty(key string) bool {
-// 	return t.Property.RemoveProperty(key)
-// }
