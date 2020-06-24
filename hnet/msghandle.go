@@ -53,7 +53,7 @@ func (t *MsgHandle) StartWorkerPool() {
 	//啟動worker
 	for i := 0; i < int(t.WorkPoolSize); i++ {
 		t.TaskQueue[i] = make(chan hinterface.Irequest, utils.GlobalObject.MaxWorkerTaskLen)
-		go t.StartOneWorker(i, t.TaskQueue[i])
+		go t.StartOneWorker(i, t.TaskQueue[i]) //這裡應該不用傳chan
 	}
 
 }
@@ -74,6 +74,7 @@ func (t *MsgHandle) StartOneWorker(workID int, taskQueue chan hinterface.Ireques
 
 /*消息給TaskQueue*/
 func (t *MsgHandle) SendMsgToTaskQueue(request hinterface.Irequest) {
+	//可以把這邊判斷workid 改成進來1次訊息加1 當到最大上限時歸0
 	WorkerID := request.GetConnection().GetConnID() % t.WorkPoolSize
 
 	t.TaskQueue[WorkerID] <- request
