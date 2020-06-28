@@ -67,10 +67,15 @@ Server名稱
 ---
 - hinterface.IServer
 1. Start()
+啟動
 2. Stop()
+停止
 3. Serve()
+開啟業務
 4. AddRouter(magid uint32,router IRouter)
+新增路由
 5. GetHook() IHook
+取得hook模塊
 ---
 - hinterface.IHook
 1. SetHook(hookname string,f func(IConnection))
