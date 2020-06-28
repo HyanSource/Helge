@@ -76,6 +76,7 @@ Server名稱
 新增路由
 #### 5. GetHook() IHook
 取得hook模塊
+
 ---
 - # hinterface.IHook
 #### 1. SetHook(hookname string,f func(IConnection))
