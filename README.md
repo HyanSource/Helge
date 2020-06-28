@@ -65,7 +65,7 @@ Server名稱
 啟動工作池的數量
 
 ---
-- hinterface.IServer
+- # hinterface.IServer
 #### 1. Start()
 啟動
 #### 2. Stop()
@@ -77,11 +77,12 @@ Server名稱
 #### 5. GetHook() IHook
 取得hook模塊
 ---
-- hinterface.IHook
+- # hinterface.IHook
 #### 1. SetHook(hookname string,f func(IConnection))
 設置hook函數
+
 ---
-- hinterface.IConnection
+- # hinterface.IConnection
 #### 1. GetTCPConnection() *net.TCPConn
 取得tcp連接
 #### 2. GetConnID() uint32
@@ -94,33 +95,39 @@ Server名稱
 傳送訊息(有緩衝)
 #### 6. GetPropertys() IProperty
 取得屬性模塊
+
 ---
-- hinterface.IProperty
+- # hinterface.IProperty
 #### 1. SetProperty(key string,value interface{})
 設置屬性
 #### 2. GetProperty(key string) (interface{},error)
 取得屬性
 #### 3. RemoveProperty(key string) bool
 移除屬性
+
 ---
-- hinterface.IMessage
+- # hinterface.IMessage
 #### 1. GetDataLen() uint32
 取得資料長度
 #### 2. GetMsgId() uint32
 取得訊息id
 #### 3. GetData() []byte
 取得訊息
+
 ---
-- hinterface.IRequest
+- # hinterface.IRequest
 #### 1. GetConnection() IConnection
 取得連接
 #### 2. GetMessage() IMessage
 取得訊息
+
 ---
-- hinterface.IRouter
+- # hinterface.IRouter
 #### 1. PreHandle(request IRequest)
 處理業務前方法
 #### 2.Handle(request IRequest) 
 處理業務方法
 #### 3. PostHandle(request IRequest)
 處理業務後方法
+
+---
