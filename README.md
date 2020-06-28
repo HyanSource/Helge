@@ -41,7 +41,7 @@ func StartConn(conn hinterface.IConnection) {
 }
 ```
 
-### 定義Global
+#### 定義Global
 1. 創建一個conf的資料夾
 2. 在資料夾下新增Helge.json
 ```json
@@ -118,9 +118,9 @@ Server名稱
 取得訊息
 ---
 - hinterface.IRouter
-1. PreHandle(request IRequest)
+#### 1. PreHandle(request IRequest)
 處理業務前方法
-2.Handle(request IRequest) 
+#### 2.Handle(request IRequest) 
 處理業務方法
-3. PostHandle(request IRequest)
+#### 3. PostHandle(request IRequest)
 處理業務後方法
