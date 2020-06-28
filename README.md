@@ -66,55 +66,55 @@ Server名稱
 
 ---
 - hinterface.IServer
-1. Start()
+#### 1. Start()
 啟動
-2. Stop()
+#### 2. Stop()
 停止
-3. Serve()
+#### 3. Serve()
 開啟業務
-4. AddRouter(magid uint32,router IRouter)
+#### 4. AddRouter(magid uint32,router IRouter)
 新增路由
-5. GetHook() IHook
+#### 5. GetHook() IHook
 取得hook模塊
 ---
 - hinterface.IHook
-1. SetHook(hookname string,f func(IConnection))
+#### 1. SetHook(hookname string,f func(IConnection))
 設置hook函數
 ---
 - hinterface.IConnection
-1. GetTCPConnection() *net.TCPConn
+#### 1. GetTCPConnection() *net.TCPConn
 取得tcp連接
-2. GetConnID() uint32
+#### 2. GetConnID() uint32
 取得connid
-3. RemoteAddr() net.Addr
+#### 3. RemoteAddr() net.Addr
 取得客戶端地址
-4. SendMsg(msgid uint32,data []byte) error
+#### 4. SendMsg(msgid uint32,data []byte) error
 傳送訊息(無緩衝)
-5. SendBuffMsg(msgid uint32,data []byte) error
+#### 5. SendBuffMsg(msgid uint32,data []byte) error
 傳送訊息(有緩衝)
-6. GetPropertys() IProperty
+#### 6. GetPropertys() IProperty
 取得屬性模塊
 ---
 - hinterface.IProperty
-1. SetProperty(key string,value interface{})
+#### 1. SetProperty(key string,value interface{})
 設置屬性
-2. GetProperty(key string) (interface{},error)
+#### 2. GetProperty(key string) (interface{},error)
 取得屬性
-3. RemoveProperty(key string) bool
+#### 3. RemoveProperty(key string) bool
 移除屬性
 ---
 - hinterface.IMessage
-1. GetDataLen() uint32
+#### 1. GetDataLen() uint32
 取得資料長度
-2. GetMsgId() uint32
+#### 2. GetMsgId() uint32
 取得訊息id
-3. GetData() []byte
+#### 3. GetData() []byte
 取得訊息
 ---
 - hinterface.IRequest
-1. GetConnection() IConnection
+#### 1. GetConnection() IConnection
 取得連接
-2. GetMessage() IMessage
+#### 2. GetMessage() IMessage
 取得訊息
 ---
 - hinterface.IRouter
