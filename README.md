@@ -79,19 +79,48 @@ Server名稱
 ---
 - hinterface.IHook
 1. SetHook(hookname string,f func(IConnection))
+設置hook函數
 ---
 - hinterface.IConnection
 1. GetTCPConnection() *net.TCPConn
+取得tcp連接
 2. GetConnID() uint32
+取得connid
 3. RemoteAddr() net.Addr
+取得客戶端地址
 4. SendMsg(msgid uint32,data []byte) error
+傳送訊息(無緩衝)
 5. SendBuffMsg(msgid uint32,data []byte) error
+傳送訊息(有緩衝)
 6. GetPropertys() IProperty
+取得屬性模塊
 ---
 - hinterface.IProperty
+1. SetProperty(key string,value interface{})
+設置屬性
+2. GetProperty(key string) (interface{},error)
+取得屬性
+3. RemoveProperty(key string) bool
+移除屬性
 ---
-- hinterface.message
+- hinterface.IMessage
+1. GetDataLen() uint32
+取得資料長度
+2. GetMsgId() uint32
+取得訊息id
+3. GetData() []byte
+取得訊息
 ---
-- hinterface.request
+- hinterface.IRequest
+1. GetConnection() IConnection
+取得連接
+2. GetMessage() IMessage
+取得訊息
 ---
-- hinterface.router
+- hinterface.IRouter
+1. PreHandle(request IRequest)
+處理業務前方法
+2.Handle(request IRequest) 
+處理業務方法
+3. PostHandle(request IRequest)
+處理業務後方法
