@@ -29,7 +29,7 @@ type PingRouter struct {
     hnet.BaseRouter
 }
 
-func (t *PingRouter) Handle(request hinterface.Irequest) {
+func (t *PingRouter) Handle(request hinterface.IRequest) {
     //do soming
 }
 

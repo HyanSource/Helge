@@ -11,7 +11,7 @@ import (
 type MsgHandle struct {
 	Apis         map[uint32]hinterface.IRouter
 	WorkPoolSize uint32
-	TaskQueue    []chan hinterface.Irequest
+	TaskQueue    []chan hinterface.IRequest
 }
 
 /*回傳一個新的處理訊息模塊*/
@@ -19,12 +19,12 @@ func NewMsgHandle() hinterface.IMsgHandle {
 	return &MsgHandle{
 		Apis:         make(map[uint32]hinterface.IRouter),
 		WorkPoolSize: utils.GlobalObject.WorkerPoolSize,
-		TaskQueue:    make([]chan hinterface.Irequest, utils.GlobalObject.WorkerPoolSize),
+		TaskQueue:    make([]chan hinterface.IRequest, utils.GlobalObject.WorkerPoolSize),
 	}
 }
 
 //以非阻塞方式處理
-func (t *MsgHandle) DoMsgHandler(request hinterface.Irequest) {
+func (t *MsgHandle) DoMsgHandler(request hinterface.IRequest) {
 
 	handler, ok := t.Apis[request.GetMessage().GetMsgId()]
 
@@ -52,14 +52,14 @@ func (t *MsgHandle) AddRouter(msgid uint32, router hinterface.IRouter) {
 func (t *MsgHandle) StartWorkerPool() {
 	//啟動worker
 	for i := 0; i < int(t.WorkPoolSize); i++ {
-		t.TaskQueue[i] = make(chan hinterface.Irequest, utils.GlobalObject.MaxWorkerTaskLen)
+		t.TaskQueue[i] = make(chan hinterface.IRequest, utils.GlobalObject.MaxWorkerTaskLen)
 		go t.StartOneWorker(i, t.TaskQueue[i]) //這裡應該不用傳chan
 	}
 
 }
 
 /*啟動工作池*/
-func (t *MsgHandle) StartOneWorker(workID int, taskQueue chan hinterface.Irequest) {
+func (t *MsgHandle) StartOneWorker(workID int, taskQueue chan hinterface.IRequest) {
 	fmt.Println("worker id:", workID)
 
 	/*處理任務迴圈*/
@@ -73,7 +73,7 @@ func (t *MsgHandle) StartOneWorker(workID int, taskQueue chan hinterface.Ireques
 }
 
 /*消息給TaskQueue*/
-func (t *MsgHandle) SendMsgToTaskQueue(request hinterface.Irequest) {
+func (t *MsgHandle) SendMsgToTaskQueue(request hinterface.IRequest) {
 	//可以把這邊判斷workid 改成進來1次訊息加1 當到最大上限時歸0
 	WorkerID := request.GetConnection().GetConnID() % t.WorkPoolSize
 

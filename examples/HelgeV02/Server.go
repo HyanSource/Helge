@@ -11,7 +11,7 @@ type PingRouter struct {
 	hnet.BaseRouter
 }
 
-func (t *PingRouter) Handle(request hinterface.Irequest) {
+func (t *PingRouter) Handle(request hinterface.IRequest) {
 	fmt.Println("recv:", string(request.GetMessage().GetData()))
 
 	err := request.GetConnection().SendBuffMsg(0, []byte("Ping"))
@@ -25,7 +25,7 @@ type PingRouter2 struct {
 	hnet.BaseRouter
 }
 
-func (t *PingRouter2) Handle(request hinterface.Irequest) {
+func (t *PingRouter2) Handle(request hinterface.IRequest) {
 	fmt.Println("recv:", string(request.GetMessage().GetData()))
 
 	err := request.GetConnection().SendBuffMsg(1, []byte("Ping2"))
