@@ -20,39 +20,78 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type SignIn struct {
-	Connid               int32    `protobuf:"varint,1,opt,name=connid,proto3" json:"connid,omitempty"`
+type StartConn struct {
+	Connid               uint32   `protobuf:"varint,1,opt,name=connid,proto3" json:"connid,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *SignIn) Reset()         { *m = SignIn{} }
-func (m *SignIn) String() string { return proto.CompactTextString(m) }
-func (*SignIn) ProtoMessage()    {}
-func (*SignIn) Descriptor() ([]byte, []int) {
+func (m *StartConn) Reset()         { *m = StartConn{} }
+func (m *StartConn) String() string { return proto.CompactTextString(m) }
+func (*StartConn) ProtoMessage()    {}
+func (*StartConn) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c06e4cca6c2cc899, []int{0}
 }
 
-func (m *SignIn) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SignIn.Unmarshal(m, b)
+func (m *StartConn) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StartConn.Unmarshal(m, b)
 }
-func (m *SignIn) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SignIn.Marshal(b, m, deterministic)
+func (m *StartConn) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StartConn.Marshal(b, m, deterministic)
 }
-func (m *SignIn) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SignIn.Merge(m, src)
+func (m *StartConn) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StartConn.Merge(m, src)
 }
-func (m *SignIn) XXX_Size() int {
-	return xxx_messageInfo_SignIn.Size(m)
+func (m *StartConn) XXX_Size() int {
+	return xxx_messageInfo_StartConn.Size(m)
 }
-func (m *SignIn) XXX_DiscardUnknown() {
-	xxx_messageInfo_SignIn.DiscardUnknown(m)
+func (m *StartConn) XXX_DiscardUnknown() {
+	xxx_messageInfo_StartConn.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_SignIn proto.InternalMessageInfo
+var xxx_messageInfo_StartConn proto.InternalMessageInfo
 
-func (m *SignIn) GetConnid() int32 {
+func (m *StartConn) GetConnid() uint32 {
+	if m != nil {
+		return m.Connid
+	}
+	return 0
+}
+
+type StopConn struct {
+	Connid               uint32   `protobuf:"varint,1,opt,name=connid,proto3" json:"connid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *StopConn) Reset()         { *m = StopConn{} }
+func (m *StopConn) String() string { return proto.CompactTextString(m) }
+func (*StopConn) ProtoMessage()    {}
+func (*StopConn) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{1}
+}
+
+func (m *StopConn) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StopConn.Unmarshal(m, b)
+}
+func (m *StopConn) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StopConn.Marshal(b, m, deterministic)
+}
+func (m *StopConn) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StopConn.Merge(m, src)
+}
+func (m *StopConn) XXX_Size() int {
+	return xxx_messageInfo_StopConn.Size(m)
+}
+func (m *StopConn) XXX_DiscardUnknown() {
+	xxx_messageInfo_StopConn.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StopConn proto.InternalMessageInfo
+
+func (m *StopConn) GetConnid() uint32 {
 	if m != nil {
 		return m.Connid
 	}
@@ -60,16 +99,18 @@ func (m *SignIn) GetConnid() int32 {
 }
 
 func init() {
-	proto.RegisterType((*SignIn)(nil), "pb.SignIn")
+	proto.RegisterType((*StartConn)(nil), "pb.StartConn")
+	proto.RegisterType((*StopConn)(nil), "pb.StopConn")
 }
 
 func init() { proto.RegisterFile("msg.proto", fileDescriptor_c06e4cca6c2cc899) }
 
 var fileDescriptor_c06e4cca6c2cc899 = []byte{
-	// 80 bytes of a gzipped FileDescriptorProto
+	// 93 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xcc, 0x2d, 0x4e, 0xd7,
-	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a, 0x48, 0x52, 0x52, 0xe0, 0x62, 0x0b, 0xce, 0x4c,
-	0xcf, 0xf3, 0xcc, 0x13, 0x12, 0xe3, 0x62, 0x4b, 0xce, 0xcf, 0xcb, 0xcb, 0x4c, 0x91, 0x60, 0x54,
-	0x60, 0xd4, 0x60, 0x0d, 0x82, 0xf2, 0x9c, 0x58, 0x57, 0x31, 0x31, 0x05, 0x24, 0x25, 0xb1, 0x81,
-	0xf5, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x61, 0x44, 0xfc, 0xe0, 0x40, 0x00, 0x00, 0x00,
+	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a, 0x48, 0x52, 0x52, 0xe6, 0xe2, 0x0c, 0x2e, 0x49,
+	0x2c, 0x2a, 0x71, 0xce, 0xcf, 0xcb, 0x13, 0x12, 0xe3, 0x62, 0x4b, 0xce, 0xcf, 0xcb, 0xcb, 0x4c,
+	0x91, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0d, 0x82, 0xf2, 0x94, 0x94, 0xb8, 0x38, 0x82, 0x4b, 0xf2,
+	0x0b, 0xf0, 0xa9, 0x71, 0x62, 0x5d, 0xc5, 0xc4, 0x14, 0x90, 0x94, 0xc4, 0x06, 0x36, 0xda, 0x18,
+	0x10, 0x00, 0x00, 0xff, 0xff, 0x38, 0xd8, 0x76, 0x56, 0x67, 0x00, 0x00, 0x00,
 }

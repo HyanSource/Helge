@@ -2,6 +2,38 @@ syntax="proto3";
 package pb;
 option csharp_namespace="Pb";
 
+//需要注意 當值是 0 "" false 則不會傳送(待測試)
+
+// //
+// message StartConn {
+//     uint32 connid=1;
+// }
+
+// message StopConn {
+//     uint32 connid=1;
+// }
+
+//msgid:1
+//登入數據
 message SignIn {
-    int32 connid=1;
+    string Name=1;
+    string Password=2;
+}
+
+//msgid:100
+//玩家訊息數據
+message PlayData {
+
+}
+
+//msgid:150
+//spin業務
+message Spin {
+
+}
+
+//msgid:200
+//玩家獲得盤面業務
+message TableData {
+
 }
