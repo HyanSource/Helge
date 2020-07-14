@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
+
+	"github.com/HyanSource/Helge/examples/GameV01/pb"
 	"github.com/HyanSource/Helge/hinterface"
 	"github.com/HyanSource/Helge/hnet"
+	"github.com/golang/protobuf/proto"
 )
 
 /*登入模塊*/
@@ -12,6 +16,18 @@ type SignIn struct {
 
 func (t *SignIn) Handle(request hinterface.IRequest) {
 
+	playerdata := &pb.PlayerData{
+		Id:    request.GetConnection().GetConnID(),
+		Money: 100000,
+	}
+
+	b, err := proto.Marshal(playerdata)
+	if err != nil {
+		fmt.Println("playerdata marshal err:", err)
+		return
+	}
+
+	request.GetConnection().SendMsg(100, b)
 }
 
 /*遊玩模塊*/
@@ -21,6 +37,18 @@ type Spin struct {
 
 func (t *Spin) Handle(request hinterface.IRequest) {
 
+	tabledata := &pb.TableData{
+		Table:    "",
+		Getmoney: 0,
+	}
+
+	b, err := proto.Marshal(tabledata)
+	if err != nil {
+		fmt.Println("tabledata marshal err:", err)
+		return
+	}
+
+	request.GetConnection().SendMsg(200, b)
 }
 
 /*連接時的hook方法*/

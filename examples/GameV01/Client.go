@@ -11,6 +11,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/HyanSource/Helge/examples/GameV01/pb"
+
 	"github.com/golang/protobuf/proto"
 )
 
@@ -18,17 +20,20 @@ func main() {
 	//設置CPU核心數 默認已經設置了
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	count := 1
+	count := 10
 
 	var wg sync.WaitGroup
 	wg.Add(count)
 
-	go func() {
-		defer wg.Done()
+	for i := 0; i < count; i++ {
+		go func() {
+			defer wg.Done()
 
-		c := NewTcpClient("127.0.0.1", 8124)
-		c.Start()
-	}()
+			c := NewTcpClient("127.0.0.1", 8124)
+			c.Start()
+		}()
+		time.Sleep(3 * time.Second)
+	}
 
 	fmt.Println("client wait")
 	wg.Wait()
@@ -53,9 +58,14 @@ type ITcpClient interface {
 }
 
 type TcpClient struct {
-	conn     net.Conn //tcp
-	Id       int32
-	isOnline chan bool
+	conn       net.Conn //tcp
+	Id         int32
+	isOnline   chan bool
+	PlayerData Data
+}
+
+type Data struct {
+	Money int32
 }
 
 func (t *TcpClient) Start() {
@@ -64,52 +74,62 @@ func (t *TcpClient) Start() {
 
 	go func() {
 		defer func() { t.isOnline <- false }()
-		//讀取datalen
-		headdata := make([]byte, 4)
-		if _, err := io.ReadFull(t.conn, headdata); err != nil {
-			fmt.Println(err)
-			return
+		for {
+			//讀取datalen
+			headdata := make([]byte, 4)
+			if _, err := io.ReadFull(t.conn, headdata); err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			datalen, err := t.Unpack(headdata)
+
+			if err != nil {
+				fmt.Println("datalen unpack err:", err)
+				return
+			}
+
+			headmsgid := make([]byte, 4)
+			if _, err := io.ReadFull(t.conn, headmsgid); err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			msgid, err := t.Unpack(headmsgid)
+
+			if err != nil {
+				fmt.Println("msgid unpack err:", err)
+				return
+			}
+
+			bodydata := make([]byte, datalen)
+
+			if _, err := io.ReadFull(t.conn, bodydata); err != nil {
+				fmt.Println("bodydata read err:", err)
+				return
+			}
+
+			m := &Message{
+				Len:   uint32(len(bodydata)),
+				MsgId: msgid,
+				Data:  bodydata,
+			}
+
+			fmt.Println(m)
+
+			t.DoMsg(m)
 		}
-
-		datalen, err := t.Unpack(headdata)
-
-		if err != nil {
-			fmt.Println("datalen unpack err:", err)
-			return
-		}
-
-		headmsgid := make([]byte, 4)
-		if _, err := io.ReadFull(t.conn, headmsgid); err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		msgid, err := t.Unpack(headmsgid)
-
-		if err != nil {
-			fmt.Println("msgid unpack err:", err)
-		}
-
-		bodydata := make([]byte, datalen)
-
-		if _, err := io.ReadFull(t.conn, bodydata); err != nil {
-			fmt.Println("bodydata read err:", err)
-			return
-		}
-
-		m := &Message{
-			Len:   uint32(len(bodydata)),
-			MsgId: msgid,
-			Data:  bodydata,
-		}
-
-		fmt.Println(m)
-
-		t.DoMsg(m)
 	}()
 
 	//goroutine writing
 	go func() {
+
+		//登入
+		signid := &pb.SignIn{
+			Name:     "Sccot",
+			Password: "123456",
+		}
+		t.SendMsg(1, signid)
 
 		select {
 		case isonline := <-t.isOnline: //online api
@@ -119,7 +139,13 @@ func (t *TcpClient) Start() {
 				go func() {
 					for {
 						//seconds
-						time.Sleep(time.Second * 1)
+						time.Sleep(time.Second * 5)
+
+						spin := &pb.Spin{
+							Bet: 1,
+						}
+
+						t.SendMsg(150, spin)
 					}
 				}()
 			} else {
@@ -136,10 +162,16 @@ func (t *TcpClient) Start() {
 func (t *TcpClient) DoMsg(msg *Message) {
 
 	switch msg.MsgId {
-
 	case 100: //玩家訊息數據
+		playerdata := &pb.PlayerData{}
+		proto.Unmarshal(msg.Data, playerdata)
+		fmt.Println(playerdata.Id, " ", playerdata.Money)
+		t.isOnline <- true
 		break
 	case 200: //玩家獲得盤面
+		tabledata := &pb.TableData{}
+		proto.Unmarshal(msg.Data, tabledata)
+		fmt.Println(tabledata.Table, " ", tabledata.Getmoney)
 		break
 	}
 

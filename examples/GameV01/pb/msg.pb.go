@@ -20,97 +20,215 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type StartConn struct {
-	Connid               uint32   `protobuf:"varint,1,opt,name=connid,proto3" json:"connid,omitempty"`
+//msgid:1 C->S
+//登入數據
+type SignIn struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
+	Password             string   `protobuf:"bytes,2,opt,name=Password,proto3" json:"Password,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *StartConn) Reset()         { *m = StartConn{} }
-func (m *StartConn) String() string { return proto.CompactTextString(m) }
-func (*StartConn) ProtoMessage()    {}
-func (*StartConn) Descriptor() ([]byte, []int) {
+func (m *SignIn) Reset()         { *m = SignIn{} }
+func (m *SignIn) String() string { return proto.CompactTextString(m) }
+func (*SignIn) ProtoMessage()    {}
+func (*SignIn) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c06e4cca6c2cc899, []int{0}
 }
 
-func (m *StartConn) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_StartConn.Unmarshal(m, b)
+func (m *SignIn) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SignIn.Unmarshal(m, b)
 }
-func (m *StartConn) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_StartConn.Marshal(b, m, deterministic)
+func (m *SignIn) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SignIn.Marshal(b, m, deterministic)
 }
-func (m *StartConn) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StartConn.Merge(m, src)
+func (m *SignIn) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SignIn.Merge(m, src)
 }
-func (m *StartConn) XXX_Size() int {
-	return xxx_messageInfo_StartConn.Size(m)
+func (m *SignIn) XXX_Size() int {
+	return xxx_messageInfo_SignIn.Size(m)
 }
-func (m *StartConn) XXX_DiscardUnknown() {
-	xxx_messageInfo_StartConn.DiscardUnknown(m)
+func (m *SignIn) XXX_DiscardUnknown() {
+	xxx_messageInfo_SignIn.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_StartConn proto.InternalMessageInfo
+var xxx_messageInfo_SignIn proto.InternalMessageInfo
 
-func (m *StartConn) GetConnid() uint32 {
+func (m *SignIn) GetName() string {
 	if m != nil {
-		return m.Connid
+		return m.Name
+	}
+	return ""
+}
+
+func (m *SignIn) GetPassword() string {
+	if m != nil {
+		return m.Password
+	}
+	return ""
+}
+
+//msgid:100 S->C
+//玩家訊息數據
+type PlayerData struct {
+	Id                   uint32   `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	Money                uint32   `protobuf:"varint,2,opt,name=Money,proto3" json:"Money,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PlayerData) Reset()         { *m = PlayerData{} }
+func (m *PlayerData) String() string { return proto.CompactTextString(m) }
+func (*PlayerData) ProtoMessage()    {}
+func (*PlayerData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{1}
+}
+
+func (m *PlayerData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PlayerData.Unmarshal(m, b)
+}
+func (m *PlayerData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PlayerData.Marshal(b, m, deterministic)
+}
+func (m *PlayerData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerData.Merge(m, src)
+}
+func (m *PlayerData) XXX_Size() int {
+	return xxx_messageInfo_PlayerData.Size(m)
+}
+func (m *PlayerData) XXX_DiscardUnknown() {
+	xxx_messageInfo_PlayerData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PlayerData proto.InternalMessageInfo
+
+func (m *PlayerData) GetId() uint32 {
+	if m != nil {
+		return m.Id
 	}
 	return 0
 }
 
-type StopConn struct {
-	Connid               uint32   `protobuf:"varint,1,opt,name=connid,proto3" json:"connid,omitempty"`
+func (m *PlayerData) GetMoney() uint32 {
+	if m != nil {
+		return m.Money
+	}
+	return 0
+}
+
+//msgid:150 C->S
+//spin業務
+type Spin struct {
+	Bet                  uint32   `protobuf:"varint,1,opt,name=Bet,proto3" json:"Bet,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *StopConn) Reset()         { *m = StopConn{} }
-func (m *StopConn) String() string { return proto.CompactTextString(m) }
-func (*StopConn) ProtoMessage()    {}
-func (*StopConn) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c06e4cca6c2cc899, []int{1}
+func (m *Spin) Reset()         { *m = Spin{} }
+func (m *Spin) String() string { return proto.CompactTextString(m) }
+func (*Spin) ProtoMessage()    {}
+func (*Spin) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{2}
 }
 
-func (m *StopConn) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_StopConn.Unmarshal(m, b)
+func (m *Spin) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Spin.Unmarshal(m, b)
 }
-func (m *StopConn) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_StopConn.Marshal(b, m, deterministic)
+func (m *Spin) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Spin.Marshal(b, m, deterministic)
 }
-func (m *StopConn) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StopConn.Merge(m, src)
+func (m *Spin) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Spin.Merge(m, src)
 }
-func (m *StopConn) XXX_Size() int {
-	return xxx_messageInfo_StopConn.Size(m)
+func (m *Spin) XXX_Size() int {
+	return xxx_messageInfo_Spin.Size(m)
 }
-func (m *StopConn) XXX_DiscardUnknown() {
-	xxx_messageInfo_StopConn.DiscardUnknown(m)
+func (m *Spin) XXX_DiscardUnknown() {
+	xxx_messageInfo_Spin.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_StopConn proto.InternalMessageInfo
+var xxx_messageInfo_Spin proto.InternalMessageInfo
 
-func (m *StopConn) GetConnid() uint32 {
+func (m *Spin) GetBet() uint32 {
 	if m != nil {
-		return m.Connid
+		return m.Bet
+	}
+	return 0
+}
+
+//msgid:200 S->C
+//玩家獲得盤面業務
+type TableData struct {
+	Table                string   `protobuf:"bytes,1,opt,name=Table,proto3" json:"Table,omitempty"`
+	Getmoney             uint32   `protobuf:"varint,2,opt,name=Getmoney,proto3" json:"Getmoney,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TableData) Reset()         { *m = TableData{} }
+func (m *TableData) String() string { return proto.CompactTextString(m) }
+func (*TableData) ProtoMessage()    {}
+func (*TableData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c06e4cca6c2cc899, []int{3}
+}
+
+func (m *TableData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TableData.Unmarshal(m, b)
+}
+func (m *TableData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TableData.Marshal(b, m, deterministic)
+}
+func (m *TableData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TableData.Merge(m, src)
+}
+func (m *TableData) XXX_Size() int {
+	return xxx_messageInfo_TableData.Size(m)
+}
+func (m *TableData) XXX_DiscardUnknown() {
+	xxx_messageInfo_TableData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TableData proto.InternalMessageInfo
+
+func (m *TableData) GetTable() string {
+	if m != nil {
+		return m.Table
+	}
+	return ""
+}
+
+func (m *TableData) GetGetmoney() uint32 {
+	if m != nil {
+		return m.Getmoney
 	}
 	return 0
 }
 
 func init() {
-	proto.RegisterType((*StartConn)(nil), "pb.StartConn")
-	proto.RegisterType((*StopConn)(nil), "pb.StopConn")
+	proto.RegisterType((*SignIn)(nil), "pb.SignIn")
+	proto.RegisterType((*PlayerData)(nil), "pb.PlayerData")
+	proto.RegisterType((*Spin)(nil), "pb.Spin")
+	proto.RegisterType((*TableData)(nil), "pb.TableData")
 }
 
 func init() { proto.RegisterFile("msg.proto", fileDescriptor_c06e4cca6c2cc899) }
 
 var fileDescriptor_c06e4cca6c2cc899 = []byte{
-	// 93 bytes of a gzipped FileDescriptorProto
+	// 186 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xcc, 0x2d, 0x4e, 0xd7,
-	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a, 0x48, 0x52, 0x52, 0xe6, 0xe2, 0x0c, 0x2e, 0x49,
-	0x2c, 0x2a, 0x71, 0xce, 0xcf, 0xcb, 0x13, 0x12, 0xe3, 0x62, 0x4b, 0xce, 0xcf, 0xcb, 0xcb, 0x4c,
-	0x91, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0d, 0x82, 0xf2, 0x94, 0x94, 0xb8, 0x38, 0x82, 0x4b, 0xf2,
-	0x0b, 0xf0, 0xa9, 0x71, 0x62, 0x5d, 0xc5, 0xc4, 0x14, 0x90, 0x94, 0xc4, 0x06, 0x36, 0xda, 0x18,
-	0x10, 0x00, 0x00, 0xff, 0xff, 0x38, 0xd8, 0x76, 0x56, 0x67, 0x00, 0x00, 0x00,
+	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a, 0x48, 0x52, 0xb2, 0xe0, 0x62, 0x0b, 0xce, 0x4c,
+	0xcf, 0xf3, 0xcc, 0x13, 0x12, 0xe2, 0x62, 0xf1, 0x4b, 0xcc, 0x4d, 0x95, 0x60, 0x54, 0x60, 0xd4,
+	0xe0, 0x0c, 0x02, 0xb3, 0x85, 0xa4, 0xb8, 0x38, 0x02, 0x12, 0x8b, 0x8b, 0xcb, 0xf3, 0x8b, 0x52,
+	0x24, 0x98, 0xc0, 0xe2, 0x70, 0xbe, 0x92, 0x11, 0x17, 0x57, 0x40, 0x4e, 0x62, 0x65, 0x6a, 0x91,
+	0x4b, 0x62, 0x49, 0xa2, 0x10, 0x1f, 0x17, 0x93, 0x67, 0x0a, 0x58, 0x2f, 0x6f, 0x10, 0x93, 0x67,
+	0x8a, 0x90, 0x08, 0x17, 0xab, 0x6f, 0x7e, 0x5e, 0x6a, 0x25, 0x58, 0x1b, 0x6f, 0x10, 0x84, 0xa3,
+	0x24, 0xc1, 0xc5, 0x12, 0x5c, 0x90, 0x99, 0x27, 0x24, 0xc0, 0xc5, 0xec, 0x94, 0x5a, 0x02, 0x55,
+	0x0e, 0x62, 0x2a, 0xd9, 0x72, 0x71, 0x86, 0x24, 0x26, 0xe5, 0xa4, 0x82, 0x0d, 0x13, 0xe1, 0x62,
+	0x05, 0x73, 0xa0, 0x6e, 0x81, 0x70, 0x40, 0x8e, 0x71, 0x4f, 0x2d, 0xc9, 0x45, 0x32, 0x15, 0xce,
+	0x77, 0x62, 0x5d, 0xc5, 0xc4, 0x14, 0x90, 0x94, 0xc4, 0x06, 0xf6, 0x98, 0x31, 0x20, 0x00, 0x00,
+	0xff, 0xff, 0xe9, 0x47, 0x6b, 0x8c, 0xe5, 0x00, 0x00, 0x00,
 }
