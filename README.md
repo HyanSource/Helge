@@ -1,5 +1,8 @@
 #### Helge 海格爾 golang 的TCPServer框架
 
+#### 架構圖
+![架構](https://github.com/HyanSource/Helge/blob/master/HelgeArchitecture.png)
+
 #### 使用方式
 
 1. 初始化server

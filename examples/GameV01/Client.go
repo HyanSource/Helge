@@ -243,7 +243,6 @@ func NewTcpClient(ip string, port int) ITcpClient {
 
 	if err != nil {
 		panic("net dial err:" + err.Error())
-		return nil
 	}
 
 	client := &TcpClient{
