@@ -2,6 +2,8 @@ package slot
 
 import (
 	"math/rand"
+
+	"github.com/HyanSource/Helge/examples/GameV02/pb"
 )
 
 //SymbolName
@@ -21,6 +23,14 @@ import (
 //1  4  7  10 13
 //0  3  6  9  12
 
+//遊玩的全域
+var PlayGame *Slot
+
+func init() {
+	PlayGame = NewSlot()
+}
+
+//初始化
 func NewSlot() *Slot {
 	return &Slot{
 		Odds: [][]int{
@@ -33,6 +43,7 @@ func NewSlot() *Slot {
 			[]int{0, 0, 10, 25, 125},
 			[]int{0, 0, 15, 50, 150},
 			[]int{0, 0, 15, 50, 175},
+			[]int{0, 0, 25, 100, 500},
 		},
 		PayLines: [][]int{
 			[]int{1, 4, 7, 10, 13},
@@ -61,24 +72,17 @@ type Slot struct {
 	Reels    [][]int
 }
 
-//結果
-func (t *Slot) Result() {
-	//盤面 []int
-	//支付線[]int
-	//賠率 int
-}
-
 //取得盤面
-func (t *Slot) GetTable() [][]int {
+func (t *Slot) GetTable() [][]int32 {
 
-	a := [][]int{}
+	a := [][]int32{}
 
 	for i := 0; i < len(t.Reels); i++ {
-		a = append(a, []int{})
+		a = append(a, []int32{})
 		r := rand.Intn(len(t.Reels[i]))
 		for j := 0; j < 3; j++ {
 			index := (r + j) % len(t.Reels[i])
-			a[i] = append(a[i], t.Reels[i][index])
+			a[i] = append(a[i], int32(t.Reels[i][index]))
 		}
 	}
 
@@ -86,11 +90,58 @@ func (t *Slot) GetTable() [][]int {
 }
 
 //取得支付線
-func (t *Slot) GetPayLines() []int {
-	return []int{}
+func (t *Slot) Result(table [][]int32) *pb.Result {
+
+	//盤面 []int
+	//支付線號[]int
+	//幾連線[]int
+	//賠率 int
+
+	//Table
+	resulttable := []int32{}
+	for i := 0; i < len(table); i++ {
+		resulttable = append(resulttable, table[i]...)
+	}
+
+	odds := 0
+	paylinesnum := []int32{}
+	paylinescount := []int32{}
+
+	for i := 0; i < len(t.PayLines); i++ {
+		ii, jj := t.GetPayLinePos(t.PayLines[i][0])
+		firstsymbol := table[ii][jj]
+		line := 0
+		for j := 1; j < len(table); j++ {
+			iii, jjj := t.GetPayLinePos(t.PayLines[i][j])
+			if firstsymbol == table[iii][jjj] {
+				line++
+			} else {
+				break
+			}
+		}
+		//有賠率
+		if line >= 2 {
+			odds += t.GetOdds(int(firstsymbol), line)
+			paylinesnum = append(paylinesnum, int32(i))
+			paylinescount = append(paylinescount, int32(line))
+		}
+
+	}
+
+	return &pb.Result{
+		Table:         resulttable,
+		Paylinesnum:   paylinesnum,
+		Paylinescount: paylinescount,
+		Odds:          int32(odds),
+	}
+}
+
+//計算線的位置
+func (t *Slot) GetPayLinePos(index int) (int, int) {
+	return (index / 3), (index % 3)
 }
 
 //取得賠率
-func (t *Slot) GetOdds() int {
-	return 0
+func (t *Slot) GetOdds(index int, line int) int {
+	return t.Odds[index][line]
 }
